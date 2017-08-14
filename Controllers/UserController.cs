@@ -45,7 +45,7 @@ namespace ecommerce.Controllers
                 _context.SaveChanges();
                 //query the database 
                 //hash teh password 
-                User justEnteredPerson = _context.Users.SingleOrDefault(user => user.Email == model.Email);
+                User justEnteredPerson = _context.users.SingleOrDefault(user => user.Email == model.Email);
                 HttpContext.Session.SetString("UserName", justEnteredPerson.FirstName);
                 HttpContext.Session.SetInt32("UserId", justEnteredPerson.UserId);
 
@@ -63,7 +63,7 @@ namespace ecommerce.Controllers
         [Route("login")]
         public IActionResult Login(string Email, string PasswordToCheck)
         {
-            User loggedUser = _context.Users.SingleOrDefault(user => user.Email == Email);
+            User loggedUser = _context.users.SingleOrDefault(user => user.Email == Email);
             // System.Console.WriteLine(loggedUser);
             // System.Console.WriteLine(loggedUser.Email);
             if (loggedUser != null && PasswordToCheck != null)
@@ -105,7 +105,7 @@ namespace ecommerce.Controllers
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
 
-            List<User> Users = _context.Users.ToList();
+            List<User> Users = _context.users.ToList();
             ViewBag.Users = Users;
             return View();
 
@@ -115,8 +115,8 @@ namespace ecommerce.Controllers
         public IActionResult DeleteUser(int UserId)
         {
             System.Console.WriteLine(UserId);
-            User RetrievedUser = _context.Users.SingleOrDefault(user => user.UserId == UserId);
-            _context.Users.Remove(RetrievedUser);
+            User RetrievedUser = _context.users.SingleOrDefault(user => user.UserId == UserId);
+            _context.users.Remove(RetrievedUser);
             _context.SaveChanges();
 
             return RedirectToAction("AllUsers");

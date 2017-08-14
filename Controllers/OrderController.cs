@@ -29,10 +29,10 @@ namespace ecommerce.Controllers
             }
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
-            List<Order> Orders = _context.Orders.Include(order => order.User).Include(order => order.Product).ToList();
+            List<Order> Orders = _context.orders.Include(order => order.User).Include(order => order.Product).ToList();
 
-            List<User> Users = _context.Users.ToList();
-            List<Product> Products = _context.Products.ToList();
+            List<User> Users = _context.users.ToList();
+            List<Product> Products = _context.products.ToList();
 
             ViewBag.Users = Users;
             ViewBag.Products = Products;
@@ -49,7 +49,7 @@ namespace ecommerce.Controllers
             order.UpdatedAt = DateTime.Now;
             _context.Add(order);
             _context.SaveChanges();
-            Product myProduct = _context.Products.SingleOrDefault(product => product.ProductId == order.ProductId);
+            Product myProduct = _context.products.SingleOrDefault(product => product.ProductId == order.ProductId);
             myProduct.Inventory -= order.Quantity;
             _context.SaveChanges();
             return RedirectToAction("AllOrders");
@@ -68,7 +68,7 @@ namespace ecommerce.Controllers
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
 
-            List<Product> Products = _context.Products.ToList();
+            List<Product> Products = _context.products.ToList();
             ViewBag.Products = Products;
             return View();
         }
@@ -88,14 +88,14 @@ namespace ecommerce.Controllers
         [Route("dashboard")]
         public IActionResult Dashboard()
         {
-            List<Product> Products = _context.Products.ToList();
+            List<Product> Products = _context.products.ToList();
             var newProducts = Products.Take(5);
             
 
-            List<Order> Orders = _context.Orders.OrderByDescending(time => time.CreatedAt).Include(order => order.User).Include(order => order.Product).ToList();
+            List<Order> Orders = _context.orders.OrderByDescending(time => time.CreatedAt).Include(order => order.User).Include(order => order.Product).ToList();
             var newOrders = Orders.Take(3);
 
-            List<User> Customers = _context.Users.OrderByDescending(time => time.CreatedAt).ToList();
+            List<User> Customers = _context.users.OrderByDescending(time => time.CreatedAt).ToList();
             var newCustomers = Customers.Take(3);
             ViewBag.Products = newProducts;
             ViewBag.Orders = newOrders;
