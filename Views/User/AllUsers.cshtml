@@ -1,0 +1,34 @@
+<h2>Welcome to the Customer Dashboard, @ViewBag.UserName</h2>
+<nav>
+  <ul>
+    <li><a href="/customers">Customers</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/orders">Orders</a></li>
+  </ul>
+</nav>
+
+<h3>Customers</h3>
+<table class='table table-hover'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Join Date</th>
+            <th>Action</th>
+        </tr>  
+    </thead>
+    <tbody>
+        @foreach (var user in @ViewBag.Users)
+        {
+            <tr>
+                <td>@user.FirstName @user.LastName</td>
+                <td>@user.CreatedAt</td>
+                <td>
+                    <form asp-controller="User" asp-action="DeleteUser" method="post">
+                        <input type="hidden" name="UserId" value="@user.UserId">
+                        <button type="submit" class='btn btn-default'> Delete? </button>
+                    </form>
+                </td>
+            </tr>
+        }
+
+</table>

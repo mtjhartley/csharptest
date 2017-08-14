@@ -1,0 +1,46 @@
+<div class='container'>
+    <nav>
+    <ul>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/orders">Orders</a></li>
+    </ul>
+    </nav>
+    <div class="col-md-12">
+    @foreach (var product in @ViewBag.Products)
+    {
+        <div class='col-md-4'>
+            <h2>@product.Name</h2>
+            <h4>(@product.Inventory left...)</h4>
+        </div>
+    }
+    
+    <a href="/products">Show more...</a>
+    </div>
+
+    <div class='col-md-12'>
+        <h4>Recent Purchases</h4>
+    @foreach (var order in @ViewBag.Orders)
+    {
+        <h4>@order.User.FirstName purchased @order.Quantity @order.Product.Name... (@order.CreatedAt)</h4>
+    }
+    <a href="/orders">Show more...</a>
+    </div>
+    <div class='col-md-12'>
+        <h4>New Customers</h4>
+    @foreach (var customer in @ViewBag.Customers)
+    {
+        <h4>@customer.FirstName joined the store. (@customer.CreatedAt)</h4>
+    }
+    <a href="/customers">Show more...</a>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>

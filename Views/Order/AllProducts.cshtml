@@ -1,0 +1,44 @@
+@model ecommerce.Models.Product 
+<div class='container'>
+<nav>
+  <ul>
+    <li><a href="/customers">Customers</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/orders">Orders</a></li>
+  </ul>
+</nav>
+
+    <!-- form container -->
+    <div class='col-md-3'>
+        <h3>Add a new product!</h3>
+        <form asp-controller="Order" asp-action="AddProduct" method='post'>
+            <div class='form-group'>
+                <label asp-for="Name">Product Name:</label>
+                <input asp-for="Name" class='form-control'/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory">Quantity:</label>
+                <input asp-for="Inventory" type='number' min='1' step='1' class='form-control'/>
+            </div>
+        <button class='btn btn-default' type="submit">Add Product</button>
+        </form>
+    </div>  
+
+    <!-- products container-->
+    <div class='col-md-9'> 
+        <div class='row'>
+            <h2>Product List</h2>
+        </div>
+        @foreach (var product in @ViewBag.products)
+        {
+            <div class='col-md-4'>
+                <h2>@product.Name</h2>
+                <h4>(@product.Inventory left...)</h4>
+            </div>
+        }
+
+    </div>
+
+
+
+</div>
